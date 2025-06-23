@@ -1,2 +1,4 @@
 /data
 /processed_labeled_dataset.pt
+/train_dataset.pt
+/test_dataset.pt

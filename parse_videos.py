@@ -9,7 +9,7 @@ def parse_videos(root_folders):
     for root in root_folders:
         for subfolder in os.listdir(root):
             path = os.path.join(root, subfolder)
-            category = subfolder[:2]
+            sp_or_hp = subfolder[:2]
             if not os.path.isdir(path): continue
             for video in os.listdir(path):
                 full_path = os.path.join(path, video)
@@ -17,17 +17,9 @@ def parse_videos(root_folders):
 
                 if match:
                     # print('match:', full_path)
-                    label = match.group(2).lower()
+                    emotion = match.group(2).lower()
                     # print((full_path, label))
-                    labeled.append((full_path, category, label))
+                    labeled.append((full_path, sp_or_hp, emotion))
                 else:
-                    unlabeled.append((full_path, category, ""))
+                    unlabeled.append((full_path, sp_or_hp, ""))
     return labeled, unlabeled
-
-# video_folders = [os.path.join(root, folder) for folder in os.listdir(root) if os.path.isdir(os.path.join(root, folder))]
-
-# labeled, unlabeled = parse_videos(video_folders)
-# print('All labeled:',labeled)
-# print('All unlabeled:', unlabeled)
-# print('Labeled Count:', len(labeled))
-# print('Unlabeled Count:', len(unlabeled))
