@@ -14,7 +14,7 @@ def extract_frames(video_path, max_frames=16, normalize=True):
         print(f"Video has 0 frames: {video_path}")
         return np.zeros((max_frames, 224, 224, 3), dtype=np.float16)
 
-    # Evenly spaced frame indices
+    #Frames with equal spacing
     indices = np.linspace(0, total_frames - 1, max_frames, dtype=np.int32)
 
     frames = []
