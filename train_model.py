@@ -12,7 +12,7 @@ class TrainModel:
 
         combined_labels = []
         combined_labels_test=[]
-
+        # for multiclass, we modify the appending to f"{status.lower()}_{emotion.lower()}" and make it reflect across
         for _, status, emotion, _ in self.train_data:
             combined_labels.append(f"{status.lower()}")
 
@@ -33,13 +33,13 @@ class TrainModel:
 
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-        # CNN feature extractor
+        # We apply CNN feature extractor here
         cnn = resnet18(weights="DEFAULT")
         self.feature_extractor = nn.Sequential(*list(cnn.children())[:-1])  # output: (B, 512, 1, 1)
         self.feature_extractor.to(self.device).eval()  # freeze CNN
         for p in self.feature_extractor.parameters(): p.requires_grad = False
 
-        # LSTM classifier
+        # We call the LSTM classifier here
         self.lstm = nn.LSTM(input_size=512, hidden_size=256, batch_first=True)
         self.classifier = nn.Linear(256, self.num_classes)
 
@@ -83,7 +83,7 @@ class TrainModel:
                 lstm_out, _ = self.lstm(feats)  # (B, T, 256)
                 final_hidden = lstm_out[:, -1, :]  # (B, 256)
                 out = self.classifier(final_hidden)  # (B, num_classes)
-
+                # We use cross entropy loss function here
                 loss = F.cross_entropy(out, y)
                 self.optimizer.zero_grad()
                 loss.backward()
