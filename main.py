@@ -38,14 +38,6 @@ class FacialExpressionRecognition:
         print(f"Secs taken for the action: {elapsed_time:.4f} seconds")
 
 
-    def convert_all_unlabeled_videos_to_frames(self):
-        unlabeled_frames = []
-        for i, unlabeled in enumerate(self.unlabeled):
-            frames = extract_frames(unlabeled[0])
-            unlabeled_frames.append((unlabeled[0], unlabeled[1], unlabeled[2], frames))
-        self.unlabeled = unlabeled_frames
-        print(self.unlabeled)
-
     def save_preprocessed_videos_as_file(self):
         torch.save(self.labeled, self.dataset_file_name)
 
@@ -86,7 +78,6 @@ class FacialExpressionRecognition:
 facial = FacialExpressionRecognition()
 # facial.categorize_videos()
 # facial.extract_frames_from_categorized_videos()
-# facial.convert_all_unlabeled_videos_to_frames()
 # facial.save_preprocessed_videos_as_file()
 # facial.split_labeled_data_set()
 # facial.save_train_test_as_file()
