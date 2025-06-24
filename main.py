@@ -4,7 +4,7 @@ from parse_videos import parse_videos
 from extract_frame import extract_frames
 from train_model import TrainModel
 import random
-
+import time
 class FacialExpressionRecognition:
     def __init__(self):
         self.root_data = 'data'
@@ -16,20 +16,28 @@ class FacialExpressionRecognition:
         self.labeled_test = []
         self.dataset_file_name = 'processed_labeled_dataset.pt'
 
-    def get_frames_from_videos(self):
+    def categorize_videos(self):
+        start_time = time.time()
         labeled, unlabeled = parse_videos(self.video_folders)
         self.labeled = labeled
         self.unlabeled = unlabeled
+        print("Num of Categorized Videos:", len(self.labeled))
+        print("Num of Uncategorized Videos:", len(self.unlabeled))
+        elapsed_time = time.time() - start_time
+        print(f"Secs taken for the action: {elapsed_time:.4f} seconds")
 
-    def convert_all_labeled_videos_to_frames(self):
+    def extract_frames_from_categorized_videos(self):
         labeled_frames = []
-        print('lab', self.labeled)
+        start_time = time.time()
         for i, labeled in enumerate(self.labeled):
             frames = extract_frames(labeled[0])
             print(frames)
             labeled_frames.append((labeled[0], labeled[1], labeled[2], frames))
         self.labeled = labeled_frames
+        elapsed_time = time.time() - start_time
         print(self.labeled)
+        print(f"Secs taken for the action: {elapsed_time:.4f} seconds")
+
 
     def convert_all_unlabeled_videos_to_frames(self):
         unlabeled_frames = []
@@ -64,9 +72,10 @@ class FacialExpressionRecognition:
 
 
 facial = FacialExpressionRecognition()
-# facial.get_frames_from_videos()
-# facial.convert_all_labeled_videos_to_frames()
+facial.categorize_videos()
+facial.extract_frames_from_categorized_videos()
+# facial.convert_all_unlabeled_videos_to_frames()
 # facial.save_preprocessed_videos_as_file()
 # facial.split_labeled_data_set()
 # facial.save_train_test_as_file()
-facial.train_predict_labeled_data_set_with_cnn()
+# facial.train_predict_labeled_data_set_with_cnn()
