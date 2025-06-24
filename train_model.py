@@ -20,16 +20,16 @@ class TrainModel:
             combined_labels_test.append(f"{status.lower()}")
         #   To check if the test and train were properly suffled based on the SP/HP
         print('combined', combined_labels)
-        print('test', combined_labels_test)
+        print('Test Classifications:', combined_labels_test)
 
         self.labels = sorted(set(combined_labels))
         self.label_map = {l: i for i, l in enumerate(self.labels)}
 
         self.num_classes = len(self.label_map)
 
-        print(self.num_classes)
-        print(self.labels)
-        print(self.label_map)
+        # print(self.num_classes)
+        print('Labels:', self.labels)
+        print('Label Mapping:', self.label_map)
 
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
