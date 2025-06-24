@@ -36,7 +36,7 @@ def extract_frames(video_path, max_frames=16, normalize=True):
     return np.array(frames, dtype=np.float16)
 
 
-  # fps = cap.get(cv2.CAP_PROP_FPS)
+    # fps = cap.get(cv2.CAP_PROP_FPS)
     # frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
     # duration = frame_count / fps
 

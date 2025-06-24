@@ -18,7 +18,7 @@ class TrainModel:
 
         for _, status, emotion, _ in self.test_data:
             combined_labels_test.append(f"{status.lower()}")
-        #   To check if the test and train were properly suffled based on the SP/HP
+        #   Verify if the test and train datasets were correctly shuffled according to the SP/HP.
         print('combined', combined_labels)
         print('Test Classifications:', combined_labels_test)
 
